@@ -1,0 +1,63 @@
+.sign-in {
+    header {
+        h1 {
+            font-family: Roboto;
+            font-style: normal;
+            font-weight: 300;
+            font-size: 300%;
+        }
+    }
+
+    main {
+        padding-top: 90px;
+        padding-bottom: 90px;
+        form {
+            display: flex;
+            justify-content: center;
+            div {
+                text-align: center;
+                div {
+                    margin-top: 20px;
+                    text-align: left;
+                    div {
+                        margin-bottom: 5px;
+                        label {
+                            font-size: 95%;
+                            font-weight: 500;
+                            color: #000000;
+                        }
+                    }
+
+                    input {
+                        min-width: 370px;
+                        border: 1px solid #000000;
+                        height: 50px;
+                        padding: 5px 15px;
+                    }
+                }
+
+                button {
+                    border: none;
+                    color: #ffffff;
+                    background-color: #833AE0;
+                    height: 50px;
+                    min-width: 120px;
+                    margin-top: 50px;
+                    cursor: pointer;
+                }
+
+                button:active {
+                    opacity: 0.5;
+                    transition: 0.1s;
+                }
+
+                span {
+                    // display: flex;
+                    // justify-content: center;
+                    color: red;
+                }
+            }
+        }
+    }    
+}
+
