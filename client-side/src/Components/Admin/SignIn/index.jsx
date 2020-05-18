@@ -15,11 +15,24 @@ class SignIn extends Component {
     }
 
     componentDidMount = () => {
+        this.checkForRedirect();
+    }
+
+    checkForRedirect = async() => {
         const token = localStorage.getItem('token');
-        if(token) {
-            // redirect to admin room..
-            // We must check so then redirect this one .
+        if(!token) {
+            return;
+        }
+        try {
+            const response  = await fetch(`http://localhost:3010/sign-in/admin-panel/${token}`);
+            console.log(response);
+            if(!response.ok) {
+                return;
+            }
             this.props.history.push('/admin-panel');
+        }
+        catch(err) {
+            return;
         }
     }
 
@@ -27,7 +40,6 @@ class SignIn extends Component {
         e.preventDefault();
         const {login, password} = this.state;
         if(!login || !password) {
-            
             return;
         }
         this.setState({loginErr: "", passwordErr: "", serverErr: ""});
@@ -42,23 +54,33 @@ class SignIn extends Component {
             body: JSON.stringify(sendableData)
         };
         try {
-            const response  = await fetch('http://localhost:3010/signin', options);
+            const response  = await fetch('http://localhost:3010/sign-in', options);
             const data      = await response.json();
             if(!response.ok) {
                 if(data.loginError) {
-                    this.setState({loginErr: true});
+                    this.setState({loginErr:    true});
                 }
                 if(data.passwordError) {
                     this.setState({passwordErr: true});
                 }
                 if(data.serverError) {
-                    this.setState({serverErr: true});
+                    this.setState({serverErr:   true});
                 }
                 return;
             }
-            if(data.token) {
+            if(data.token && data.user_role) {
                 localStorage.setItem('token', data.token);
-                this.props.history.push('/admin-panel');
+                switch(data.user_role) {
+                    case 1:
+                        this.props.history.push('/admin-panel');
+                    break;
+                    case 2: 
+
+                    break;
+                    default:
+                        this.props.history.push('/');
+                    break;
+                }
             }
         }
         catch(err) {
@@ -92,14 +114,14 @@ class SignIn extends Component {
                                     <label htmlFor="login">Login</label> 
                                     { loginErr && <span>&nbsp;&#127987;&nbsp;{"Invalid login"}</span> }
                                 </div> 
-                                <input type="text" id="login" value={login} onChange={this.handleLoginChange} required />
+                                <input type="text" id="login" value={login} onChange={this.handleLoginChange} required placeholder="login" />
                             </div>
                             <div>
                                 <div>
                                     <label htmlFor="password">Password</label>
                                     { passwordErr && <span>&nbsp;&#127987;&nbsp;{"Invalid password"}</span> }
                                 </div>
-                                <input type="password" id="password" value={password} onChange={this.handlePasswordChange} required />
+                                <input type="password" id="password" value={password} onChange={this.handlePasswordChange} required placeholder="password" />
                             </div> 
                             <button type="submit">Sign in</button>
                             { serverErr && <span><br/><br/>&#127987;&nbsp;{"Uncaught server error "}</span> }

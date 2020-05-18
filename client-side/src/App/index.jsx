@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import { BrowserRouter, Route } from "react-router-dom";
-import HomePage from '../User/HomePage/index';
-import SignIn from '../Admin/SignIn/index';
-import AdminPanel from '../Admin/AdminPanel/index';
+import HomePage from '../Components/User/HomePage/index';
+import SignIn from '../Components/Admin/SignIn/index';
+import AdminPanel from '../Components/Admin/AdminPanel/index';
 
 class App extends Component {
 
