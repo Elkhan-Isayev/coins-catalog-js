@@ -74,7 +74,7 @@ app.get('/coins', (req, res) => {
     const filter    = req.query.filter;
 
     if(filter===undefined) {
-        const getCoinsScript = `SELECT * FROM coins LIMIT ${offset}, ${count}`; 
+        const getCoinsScript = `SELECT id, coin_name, short_description, obverse_path FROM coins LIMIT ${offset}, ${count}`; 
         pool.query(getCoinsScript, (err, data) => {
             if(!err) {
                 // res.status(200).json(data.slice(offset, offset + count));
@@ -110,21 +110,43 @@ app.get('/coins/:id', (req, res) => {
     });
 });
 
-
-app.delete('coins/:id', (req, res) => {         // add check access via token
-    console.log(123456);
-    const id = +req.params.id;
-    console.log(id);
-    const deleteScript = `DELETE FROM coins WHERE id=${id}`;
-    pool.query(deleteScript, (err, data) => {
+app.get('/coins-length', (req, res) => {
+    
+    const coinsLengthScript = `SELECT count(*) AS length FROM coins`;
+    pool.query(coinsLengthScript, (err, data) => {
         if(!err) {
-            res.status(200).json(data);
+            res.status(200).json(data[0]);
         }
         else {
+            console.log(err);
             res.status(500).json(err);
         }
     });
 });
+
+app.delete('/coins/:id', (req, res) => {         // add check access via token
+    const id = +req.params.id;
+    const {token} = req.body;
+    checkAccess(token, 1, res, (result, res) => {        
+        if(result.isOk) {
+            const deleteScript = `DELETE FROM coins WHERE id=?`;
+            pool.query(deleteScript, id, (err, data) => {
+                if(!err) {
+                    res.status(200).json(data);
+                }
+                else {
+                    res.status(500);
+                }
+            });
+        }
+        else {
+            res.sendStatus(result.status);
+        }
+        return;
+    });
+});
+
+
 
 app.get('/img/coins/:coin', (req, res) => {   
     const options = { 
@@ -147,6 +169,9 @@ app.get('/img/coins/:coin', (req, res) => {
     }    
 });
 
+app.put('/coins/:id', (req, res) => {
+
+});
 
 
 
