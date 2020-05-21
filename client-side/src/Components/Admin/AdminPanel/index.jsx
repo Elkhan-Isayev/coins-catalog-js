@@ -86,14 +86,11 @@ class AdminPanel extends Component {
     }
 
     render = () => {
-        console.log(12345678);
         const {data} = this.state;
         return (
             <div className="admin-panel">
                 <header>
-                    {/* <div> */}
-                        <h1>Admin Panel</h1>
-                    {/* </div> */}
+                    <h1>Admin Panel</h1>
                     <div>
                         <Link to="/sign-in" onClick={this.handleSignOut}>Sign out</Link>
                     </div>
@@ -101,6 +98,19 @@ class AdminPanel extends Component {
                 <main>
                     <SearchBar handleSearchSubmit={this.handleSearchSubmit} />
                     
+
+                    <div className="admin-panel-add-coin">
+                        <Link to={`/coin/artisan/create`} className="admin-panel-create-link">
+                            <div className="admin-panel-create-wrapper">
+                                <div className="admin-panel-add-coin-circle">
+                                    <span>+</span>
+                                </div>
+                                <div className="admin-panel-add-coin-text">
+                                    <span>Add a new coin</span>
+                                </div>
+                            </div>
+                        </Link>
+                    </div>
                     {
                         data.length > 0 &&
                         data.map((element, index) => {

@@ -1,0 +1,41 @@
+.coin-artisan {
+    box-sizing: border-box;
+    header {
+
+        h1 {
+            font-family: Roboto;
+            font-style: normal;
+            font-weight: 300;
+            font-size: 300%;
+        }
+    }   
+}
+
+.coin-artisan-first-floor {
+    display: flex;
+    justify-content: space-around;
+    height: 160px;
+
+    .coin-artisan-first-floor-item {
+        width: 30%;
+    }
+}
+
+.coin-artisan-second-floor {
+    display: flex;
+    justify-content: space-around;
+    height: 160px;
+    .coin-artisan-second-floor-item {
+        width: 30%;
+    }
+}
+
+.coin-artisan-third-floor {
+    display: flex;
+    justify-content: space-around;
+    height: 160px;
+    .coin-artisan-third-floor-item {
+        width: 30%;
+    }
+    
+}

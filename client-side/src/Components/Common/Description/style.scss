@@ -1,0 +1,137 @@
+.description article {
+    margin: 0 160px;
+    display: flex;
+    /* justify-content: space-between; */
+    /* flex-wrap: wrap; */
+    min-height: 600px;
+}
+
+.description-icon-img {
+   width: 50%;
+   overflow: hidden;
+   /* min-width: 500px; */
+   position: relative;
+}
+
+.description-icon-img div img {
+    cursor: crosshair;
+    margin-top: 150px;
+    width: 100%;
+}
+
+.description-obverse {
+    width: 80%;
+}
+ 
+.description-reverse {
+    width: 80%;
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+/* 
+.icon-img .obverse:hover + .reverse {
+    display: block;
+}  
+*/
+
+.description-icon-img:hover .description-reverse {
+    display: block;
+}
+
+.description-icon-info {
+    margin-top: 20px;
+    background-color: rgba(196, 196, 196, 0.5);
+    width: 40%;
+    /* min-width: 400px; */
+    padding: 10px 45px 10px 45px;
+    font-family: Roboto, Arial, Helvetica, sans-serif;
+    margin-bottom: 20px;
+    min-height: 600px;
+    position: relative;
+}
+
+.description-icon-info-article {
+    color: #7a7a7a;
+}
+
+.description-icon-info p {
+    margin-top: 5%;
+    font-family: Roboto, -apple-system, BlinkMacSystemFont, 'Segoe UI', Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.description-price-header { 
+    color: #7a7a7a;
+    font-size: 75%;
+}
+
+.description-price {
+    font-weight: bold;
+    color: black;
+    font-size: 200%;
+}
+
+.description table {
+    margin-top: 5%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    width: 100%;
+}
+
+
+.description td {
+    padding: 5px;
+    font-size: 10px;
+}
+
+.description tr td:first-child {
+    border-right: 1px solid #cac6c6;
+}
+
+.description tr {
+    border-bottom: 1px solid #cac6c6;
+}
+
+.description tr:last-child {
+    border-bottom: 0px solid #cac6c6;
+}
+
+.description tr:nth-child(2n-1) {
+    background-color: #ffffff;
+}
+
+.description-btn-wrapper {
+    // margin-top: 100px;
+    margin-top: auto;    
+    // display: flex;
+    // justify-content: center;
+    // align-items: center;
+}
+
+.description-icon-info button {
+    cursor: pointer;
+    display: block;
+    color: #ffffff;
+    border: none;
+    background-color: #833AE0;
+    padding: 10px 20px;
+}
+
+.description-icon-info button:active {
+    opacity: 0.5;
+    transition: 0.5s;
+}
+
+.description-icon-info p {
+    font-size: 14px;
+    line-height: 125.5%;
+}
+
+.description-icon-info h1 {
+    font-size: 28px;
+    line-height: 33px;
+    font-weight: bold;
+    font-style: normal;
+}

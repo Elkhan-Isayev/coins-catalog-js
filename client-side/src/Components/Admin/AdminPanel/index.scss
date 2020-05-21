@@ -79,3 +79,52 @@
     height: 50px;
     font-weight: normal;
 }
+
+.admin-panel-create-wrapper {
+    display: flex;
+    justify-content: flex-start;
+    // margin-top: 40px;
+    max-width: 390px;
+    min-width: 350px;
+}
+
+.admin-panel-add-coin-circle {
+    border: 1px solid #000000;
+    border-radius: 100%;
+    min-width: 150px;
+    min-height: 150px;
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.admin-panel-add-coin-circle span {
+    display: inline-block;
+    margin: auto auto;
+}
+
+.admin-panel-add-coin-text {
+    max-width: 350px;
+    margin-left: 30px;
+    display: flex;
+    flex-wrap: nowrap;   
+}
+
+.admin-panel-add-coin-text span {
+    margin: auto;
+}
+
+.admin-panel-create-link {
+    max-width: 390px;
+    min-width: 350px;
+    display: inline-block;
+    text-decoration: none;
+}
+
+.admin-panel-create-link:hover {
+    opacity: 0.5;
+    transition: 1s;
+}
+
+.admin-panel-add-coin {
+    margin-top: 40px;
+}

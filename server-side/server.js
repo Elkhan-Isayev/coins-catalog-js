@@ -1,13 +1,26 @@
 //  Libraries
 const express   = require('express');
-const app       = express();
 const bcrypt    = require('bcrypt');
 const cors      = require('cors');
 const path      = require('path');
-const port      = process.env.PORT || 3010;
+const multer    = require('multer');
 
-//  Data base
+//  Modules
 const pool = require('./modules/db_connect');
+
+//  Constants
+const app       = express();
+const port      = process.env.PORT || 3010;
+const storage   = multer.diskStorage({
+    destination: './assets/public/coins',
+    filename: (req, file, cb) => {
+        return cb(
+            null, 
+            `${file.fieldname}_${Date.now()}${path.extname(file.originalname)}`
+        )
+    }
+});  
+const upload    = multer({storage});
 
 //  Functions
 const randomStringGenerator = require('./functions/randomStringGenerator.js');
@@ -167,6 +180,21 @@ app.get('/img/coins/:coin', (req, res) => {
             res.sendStatus(404);
         });
     }    
+});
+
+app.get('/img/download/coins/:coin', (req, res) => {
+    const coin = req.params.coin;
+    const file = `${__dirname}/assets/public/coins/${coin}`;
+    res.download(file);
+});
+
+app.post('/coins', upload.fields([{name: 'obverse'}, {name: 'reverse'}]), (req, res) => {
+    const obverseFileName = req.files.obverse[0].filename;
+    const reverseFileName = req.files.reverse[0].filename;
+    
+
+    
+    res.sendStatus(200);
 });
 
 app.put('/coins/:id', (req, res) => {
