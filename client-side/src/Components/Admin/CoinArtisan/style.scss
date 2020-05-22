@@ -1,8 +1,8 @@
 .coin-artisan {
     box-sizing: border-box;
     header {
-
         h1 {
+            margin-left: 20px;
             font-family: Roboto;
             font-style: normal;
             font-weight: 300;
@@ -14,7 +14,7 @@
 .coin-artisan-first-floor {
     display: flex;
     justify-content: space-around;
-    height: 160px;
+    height: 250px;
 
     .coin-artisan-first-floor-item {
         width: 30%;
@@ -24,7 +24,7 @@
 .coin-artisan-second-floor {
     display: flex;
     justify-content: space-around;
-    height: 160px;
+    height: 250px;
     .coin-artisan-second-floor-item {
         width: 30%;
     }
@@ -33,9 +33,139 @@
 .coin-artisan-third-floor {
     display: flex;
     justify-content: space-around;
-    height: 160px;
+    height: 250px;
     .coin-artisan-third-floor-item {
         width: 30%;
     }
     
+}
+
+.customInputViaLabel {
+    margin-top: 20px;
+    text-align: left;
+    div {
+        margin-bottom: 5px;
+        label {
+            font-size: 95%;
+            font-weight: 500;
+            color: #000000;
+        }
+    }
+
+    input {
+        min-width: 370px;
+        border: 1px solid #000000;
+        height: 50px;
+        padding: 5px 15px;
+        border: 1px solid #6f6f6f;
+    }
+}
+
+.customSelectViaLabel {
+    margin-top: 20px;
+    text-align: left;
+    div {
+        margin-bottom: 5px;
+        label {
+            font-size: 95%;
+            font-weight: 500;
+            color: #000000;
+        }
+    }
+
+    select {
+        min-width: 400px;
+        border: 1px solid #000000;
+        height: 61px;
+        padding: 5px 15px;
+        border: 1px solid #6f6f6f;
+    }
+}
+
+.customTextareaViaLabel {
+    margin-top: 20px;
+    text-align: left;
+    div {
+        margin-bottom: 5px;
+        label {
+            font-size: 95%;
+            font-weight: 500;
+            color: #000000;
+        }
+    }
+
+    textarea {
+        min-width: 370px;
+        border: 1px solid #000000;
+        // height: 50px;
+        padding: 5px 15px;
+        border: 1px solid #6f6f6f;
+    }
+}
+
+.coin-artisan-btns-wrapper {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 50px;
+    button {
+        min-width: 120px;
+        border: none;
+        padding: 5px 10px;
+        height: 50px;
+        cursor: pointer;
+    }
+
+    input {
+        min-width: 120px;
+        border: none;
+        padding: 5px 10px;
+        height: 50px;
+        cursor: pointer;
+    }
+
+    :first-child {
+        border: none;
+        background-color: #833AE0;
+        color: #ffffff;
+    }
+}
+
+.coin-artisan-file-wrapper {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    label {
+        cursor: pointer;
+        min-width: 120px;
+        min-height: 120px;
+        border: 1px solid #000000;
+        border-radius: 100%;
+        display: flex;
+        span {
+            display: inline-block;
+            margin: auto auto;
+        }
+    }
+
+    img {
+        width: 120px;
+        height: 120px;
+        cursor: pointer;
+        border-radius: 100%;
+        border: 1px solid #000000;
+    }
+
+    // div:first-child {
+    //     border: 1px solid #000000;
+    //     min-height: 120px;
+    //     min-width: 120px;
+    //     border-radius: 100%;
+    //     display: flex;
+    //     label {
+    //         display: inline-block;
+    //         margin: auto auto;
+    //         cursor: pointer;
+    //     }
+    // }
 }

@@ -38,4 +38,25 @@
             
         }
     }
+
+    .search-bar-filter-title {
+
+        input {
+            text-decoration: underline;
+            color: black;
+            cursor: pointer;
+            border: none;
+            background-color: white;
+            margin-top: 10px;
+            padding-left: 0px;
+        }
+        
+        span {
+            margin-top: 10px;
+        }
+
+        .filter-wrapper {
+            position: absolute;
+        }
+    }
 }

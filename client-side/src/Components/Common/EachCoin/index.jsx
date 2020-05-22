@@ -9,10 +9,10 @@ class EachCoin extends Component {
             <div className="each-coin">
                 {
                     id && coin_name && obverse_path && short_description &&
-                    <Link to={`coin/description/${id}`} className="each-coin-link">
+                    <Link to={`/description/${id}`} className="each-coin-link">
                         <div className="each-coin-wrapper">
                             <div className="each-coin-image-wrapper">
-                                <img src={`http://localhost:3010/img/${obverse_path}`} alt="COIN.png" className="each-coin-image" />
+                                <img src={`http://localhost:3010/img/coins/${obverse_path}`} alt="COIN.png" className="each-coin-image" />
                             </div>
                             <div className="each-coin-info">
                                 <div className="each-coin-description">

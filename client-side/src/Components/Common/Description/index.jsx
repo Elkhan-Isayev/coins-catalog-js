@@ -101,11 +101,11 @@ class Description extends Component {
                     <article>
                         <div className="description-icon-img"> 
                             <div className="description-obverse">
-                                <img src={`http://localhost:3010/img/${obverse_path}`} alt="COIN.png" />
+                                <img src={`http://localhost:3010/img/coins/${obverse_path}`} alt="COIN.png" />
                             </div>
 
                             <div className="description-reverse">
-                                <img src={`http://localhost:3010/img/${reverse_path}`} alt="COIN.png" />
+                                <img src={`http://localhost:3010/img/coins/${reverse_path}`} alt="COIN.png" />
                             </div>
                         </div>
                         <div className="description-icon-info">

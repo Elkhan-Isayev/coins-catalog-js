@@ -131,8 +131,6 @@ class AdminPanel extends Component {
                             )
                         }) 
                     }
-                    
-
                 </main>
                 <footer>
 

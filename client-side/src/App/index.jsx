@@ -5,6 +5,7 @@ import SignIn from '../Components/Admin/SignIn/index';
 import AdminPanel from '../Components/Admin/AdminPanel/index';
 import Description from '../Components/Common/Description/index';
 import CoinArtisan from '../Components/Admin/CoinArtisan/index';
+import CoinsList from '../Components/User/List/index';
 
 class App extends Component {
 
@@ -14,9 +15,10 @@ class App extends Component {
                 <BrowserRouter>
                     <Route exact path="/" component={HomePage} />
                     <Route exact path="/sign-in" component={SignIn} />
+                    <Route exact path="/list" component={CoinsList} />
                     <Route exact path="/admin-panel" component={AdminPanel} />
                     <Route exact path="/coin/artisan/:id" component={CoinArtisan} />
-                    <Route exact path="/coin/description/:id" component={Description} />
+                    <Route exact path="/description/:id" component={Description} />
                 </BrowserRouter>
             </div>
         )

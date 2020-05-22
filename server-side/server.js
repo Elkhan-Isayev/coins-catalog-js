@@ -81,28 +81,31 @@ app.post('/sign-in', (req, res) => {
 });
 
 app.get('/coins', (req, res) => {
-    //  localhost:3010/coins/?count=10&offset=3&filter={}
-    const offset    = req.query.offset ? parseInt(req.query.offset) : 0;
-    const count     = req.query.count ? parseInt(req.query.count) : 10;    
-    const filter    = req.query.filter;
+    const {type} = req.query;
+    const typeInfo = type ? `WHERE coin_type='${type}'` : 'WHERE id > 0';
 
-    if(filter===undefined) {
-        const getCoinsScript = `SELECT id, coin_name, short_description, obverse_path FROM coins LIMIT ${offset}, ${count}`; 
-        pool.query(getCoinsScript, (err, data) => {
-            if(!err) {
-                // res.status(200).json(data.slice(offset, offset + count));
-                res.status(200).json(data);
-            }
-            else {
-                res.sendStatus(500);
-                return;
-            }
-        });
-    }
-    else {
-        // ////......
-        res.sendStatus(200);
-    }
+    const getCoinsScript = `SELECT id, coin_name, short_description, obverse_path FROM coins ${typeInfo};`; 
+    pool.query(getCoinsScript, (err, data) => {
+        if(!err) {
+            res.status(200).json(data);
+        }
+        else {
+            res.sendStatus(500);
+        }
+    });
+
+    // const { name, information, country, composition, quality, priceFrom, priceTo, yearIssueFrom, yearIssueTo } = req.query;
+    // const nameInformation = name ? `name LIKE '%${name}%' OR information LIKE '%${information}%'` : 'id > 0';
+    // const countrySql = country ? `AND country='${country}'` : '';
+    // const compositionSql = composition ? `AND composition='${composition}'` : '';
+    // const qualitySql = quality ? `AND quality='${quality}'` : '';
+    // const priceFromSql = priceFrom ? `AND price>=${+priceFrom}` : '';
+    // const priceToSql = priceTo ? `AND price<=${+priceTo}` : '';
+    // const yearIssueFromSql = yearIssueFrom ? `AND date>=${+yearIssueFrom}` : '';
+    // const yearIssueToSql = yearIssueTo ? `AND date<=${+yearIssueTo}` : '';
+    // const OrderBy = name ? `ORDER BY CASE  WHEN name LIKE '${name}%' THEN 1  WHEN name LIKE '%${information}' THEN 3  ELSE 2  END` : '';
+    // const searchDataSql = `SELECT * FROM coins.coins WHERE(${nameInformation} ${countrySql}) ${compositionSql} ${qualitySql} ${priceFromSql} ${priceToSql} ${yearIssueFromSql} ${yearIssueToSql} AND status = 'true' ${OrderBy}`
+
 });
 
 app.get('/coins/:id', (req, res) => {
@@ -182,26 +185,152 @@ app.get('/img/coins/:coin', (req, res) => {
     }    
 });
 
+app.get('/compositions', (req, res) => {
+    const getScript = `SELECT * FROM compositions`;
+    pool.query(getScript, (err, data) => {
+        if(!err) {
+            if(data.length > 0) {
+                res.status(200).json(data);
+            }
+            else {
+                res.sendStatus(404);
+            }
+        }
+        else {
+            res.sendStatus(500);
+        }
+    });
+});
+
+app.get('/countries', (req, res) => {
+    const getScript = `SELECT * FROM countries`;
+    pool.query(getScript, (err, data) => {
+        if(!err) {
+            if(data.length > 0) {
+                res.status(200).json(data);
+            }
+            else {
+                res.sendStatus(404);
+            }
+        }
+        else {
+            res.sendStatus(500);
+        }
+    });
+});
+
+
+
 app.get('/img/download/coins/:coin', (req, res) => {
     const coin = req.params.coin;
     const file = `${__dirname}/assets/public/coins/${coin}`;
     res.download(file);
 });
 
+
+
 app.post('/coins', upload.fields([{name: 'obverse'}, {name: 'reverse'}]), (req, res) => {
     const obverseFileName = req.files.obverse[0].filename;
     const reverseFileName = req.files.reverse[0].filename;
-    
+    const {
+        coin_name,
+        short_description,
+        full_description,
+        issuing_country,
+        composition,
+        quality,
+        denomination,
+        coin_year,
+        weight,
+        price,
+        coin_type,
+    } = req.body;
 
-    
-    res.sendStatus(200);
+    const insertScript = `
+    INSERT INTO coins 
+    (coin_name, short_description, full_description, issuing_country, composition, quality, denomination, coin_year, weight, price, obverse_path, reverse_path, coin_type) 
+    VALUES
+    (
+        '${coin_name}', 
+        '${short_description}',
+        '${full_description}',
+        '${issuing_country}',
+        '${composition}',
+        '${quality}',
+        '${denomination}',
+        ${coin_year},
+        ${weight},
+        ${price},
+        '${obverseFileName}',
+        '${reverseFileName}',
+        ${coin_type}
+    );`;
+    pool.query(insertScript, (err, data) => {
+        if(!err) {
+            res.sendStatus(200);
+        }
+        else {
+            res.sendStatus(500);
+        }
+    });
 });
 
-app.put('/coins/:id', (req, res) => {
+app.put('/coins/:id', upload.fields([{name: 'obverse'}, {name: 'reverse'}]), (req, res) => {
+    // console.log(req.body);
+
+    const id = +req.params.id;
+    let obversePath, reversePath;
+    const {
+        coin_name,
+        short_description,
+        full_description,
+        issuing_country,
+        composition,
+        quality,
+        denomination,
+        coin_year,
+        weight,
+        price,
+        coin_type,
+    } = req.body;
+
+
+    if(req.body.editObverseStart && req.body.editReverseStart) {
+        obversePath = req.body.editObverseStart;
+        reversePath = req.body.editReverseStart;
+    }
+    else {
+        obversePath = req.files.obverse[0].filename;
+        reversePath = req.files.reverse[0].filename;
+    }
+
+    const updateScript = `
+    UPDATE coins SET 
+    coin_name='${coin_name}',
+    short_description='${short_description}',
+    full_description='${full_description}', 
+    issuing_country='${issuing_country}', 
+    composition='${composition}', 
+    quality='${quality}', 
+    denomination='${denomination}', 
+    coin_year=${coin_year}, 
+    weight=${weight},
+    price=${price}, 
+    obverse_path='${obversePath}', 
+    reverse_path='${reversePath}',
+    coin_type=${coin_type}
+    WHERE id=${id}`;
+
+    pool.query(updateScript, (err, data) => {
+        if(!err) {
+            res.sendStatus(200);
+        }
+        else {
+            console.log(err);
+            res.sendStatus(500);
+        }
+    });
 
 });
-
-
-
 
 app.listen(port, () => {    console.log("Server is running!...");   });
