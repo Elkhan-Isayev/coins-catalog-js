@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import './style.scss';
 
 class SignIn extends Component {
@@ -104,7 +105,10 @@ class SignIn extends Component {
         return (
             <div className="sign-in">
                 <header>
-                    <h1>Admin Panel</h1>
+                    <h1>Login</h1>
+                    <div>
+                        <Link to="/">Homepage </Link><span>— Login</span>
+                    </div>
                 </header>
                 <main>
                     <form onSubmit={this.handleSubmit} autoComplete="off">
