@@ -13,7 +13,7 @@ class HomePage extends Component {
         return (
             <div className="homepage">
                 <header>
-                    <h1>Admin Panel</h1>
+                    <h1>Homepage</h1>
                     <div>
                         <Link to="/sign-in">Login</Link>
                     </div>
