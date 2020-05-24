@@ -5,8 +5,11 @@ import './style.scss';
 
 class HomePage extends Component {
 
-    handleSearchSubmit = (e) => {
+    handleSearchSubmit = (e, criteria) => {
         e.preventDefault();
+        console.log(criteria)
+        // const {inputValue, selectedCountry, priceFrom, priceTo, yearFrom, yearTo} = criteria;
+        this.props.history.push(`/list/${criteria}`);
     }
 
     render = () => {
@@ -20,7 +23,7 @@ class HomePage extends Component {
                 </header>
 
                 <main>
-                    <SearchBar handleSearchSubmit={this.handleSearchSubmit} isFilterShow={true} />
+                    <SearchBar handleSearchSubmit={this.handleSearchSubmit} isFilter={true} />
 
                     <div className="categoriesWrapper">
                         <div>

@@ -4,6 +4,7 @@ const bcrypt    = require('bcrypt');
 const cors      = require('cors');
 const path      = require('path');
 const multer    = require('multer');
+const fs        = require('fs');        
 
 //  Modules
 const pool = require('./modules/db_connect');
@@ -81,10 +82,31 @@ app.post('/sign-in', (req, res) => {
 });
 
 app.get('/coins', (req, res) => {
-    const {type} = req.query;
-    const typeInfo = type ? `WHERE coin_type='${type}'` : 'WHERE id > 0';
-
-    const getCoinsScript = `SELECT id, coin_name, short_description, obverse_path FROM coins ${typeInfo};`; 
+    const {type, searchBarMainInput, priceFrom, priceTo, yearFrom, yearTo, issuingCountry, composition, quality} = req.query;
+    //  Filter by..
+    const byTypeInfo            = type ? `coin_type='${type}'` : 'id > 0';
+    const byNameOrDescription   = searchBarMainInput ? 
+    `AND coin_name LIKE '%${searchBarMainInput}%' 
+        OR short_description LIKE '%${searchBarMainInput}%' 
+        OR full_description LIKE '%${searchBarMainInput}%'` 
+    : ``;
+    const byPriceFrom           = priceFrom ? `AND price>=${+priceFrom}` : ``;
+    const byPriceTo             = priceTo ? `AND price<=${+priceTo}` : ``;
+    const byYearFrom            = yearFrom ? `AND coin_year<=${+yearFrom}` : ``;
+    const byYearTo              = yearTo ?  `AND coin_year>=${+yearTo}` : ``;
+    const byIssuingCountry      = issuingCountry ? `AND issuing_country='${issuingCountry}'` : ``;
+    const byComposition         = composition ? `AND composition='${composition}'` : ``;
+    const byQuality             = quality ? `AND quality='${quality}'` : ``;
+    //  Order by..
+    const orderBy               = searchBarMainInput ? 
+    `ORDER BY CASE 
+        WHEN coin_name='${searchBarMainInput}' THEN 1 
+        WHEN short_description='${searchBarMainInput}' THEN 2 
+        WHEN full_description='${searchBarMainInput}' THEN 3 END` 
+    : ``;
+    //  Total script
+    const getCoinsScript        = `SELECT id, coin_name, short_description, obverse_path FROM coins 
+    WHERE(${byTypeInfo} ${byNameOrDescription} ${byPriceFrom} ${byPriceTo} ${byYearFrom} ${byYearTo} ${byIssuingCountry} ${byComposition} ${byQuality}) ${orderBy}`; 
     pool.query(getCoinsScript, (err, data) => {
         if(!err) {
             res.status(200).json(data);
@@ -93,19 +115,6 @@ app.get('/coins', (req, res) => {
             res.sendStatus(500);
         }
     });
-
-    // const { name, information, country, composition, quality, priceFrom, priceTo, yearIssueFrom, yearIssueTo } = req.query;
-    // const nameInformation = name ? `name LIKE '%${name}%' OR information LIKE '%${information}%'` : 'id > 0';
-    // const countrySql = country ? `AND country='${country}'` : '';
-    // const compositionSql = composition ? `AND composition='${composition}'` : '';
-    // const qualitySql = quality ? `AND quality='${quality}'` : '';
-    // const priceFromSql = priceFrom ? `AND price>=${+priceFrom}` : '';
-    // const priceToSql = priceTo ? `AND price<=${+priceTo}` : '';
-    // const yearIssueFromSql = yearIssueFrom ? `AND date>=${+yearIssueFrom}` : '';
-    // const yearIssueToSql = yearIssueTo ? `AND date<=${+yearIssueTo}` : '';
-    // const OrderBy = name ? `ORDER BY CASE  WHEN name LIKE '${name}%' THEN 1  WHEN name LIKE '%${information}' THEN 3  ELSE 2  END` : '';
-    // const searchDataSql = `SELECT * FROM coins.coins WHERE(${nameInformation} ${countrySql}) ${compositionSql} ${qualitySql} ${priceFromSql} ${priceToSql} ${yearIssueFromSql} ${yearIssueToSql} AND status = 'true' ${OrderBy}`
-
 });
 
 app.get('/coins/:id', (req, res) => {
@@ -175,13 +184,16 @@ app.get('/img/coins/:coin', (req, res) => {
     const coin = req.params.coin;
     const notFoundImgPath = 'not-found.png';
     try {
-        res.sendFile(coin, options);
+        if(fs.existsSync(`./assets/public/coins/${coin}`)) {
+            res.sendFile(coin, options);
+        }
+        else {
+            res.sendFile(notFoundImgPath, options);
+        }
     }
     catch(err) {
-        res.sendFile(notFoundImgPath, options, (secondErr) => {                 // Not work
-            console.log(secondErr);
-            res.sendStatus(404);
-        });
+        console.log(err);
+        res.sendStatus(404);
     }    
 });
 
