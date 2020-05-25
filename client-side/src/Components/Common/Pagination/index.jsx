@@ -1,44 +1,34 @@
 import React, { Component } from 'react';
 import './style.scss';
 
-class Pagination extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            pages: [],
+const Pagination = ({coinsPerPage, totalCoins, changeCurrPage}) => {
+    
+    const pages = [];
 
-        }
+
+    for(let i = 1; i <= Math.ceil(totalCoins / coinsPerPage); i++) {
+        pages.push(i);
     }
 
-    componentDidMount = () => {
-        
-    }
 
-    render = () => {
-        const {coinsPerPage, totalCoins, changeCurrPage} = this.props;
-        const pages = this.state.pages;
-
-        for(let i = 1; i <= Math.ceil(totalCoins / coinsPerPage); i++) {
-            pages.push(i);
-        }
-
-        return (
-            <div className="pagination">
-                <ul>
-                    {
-                        pages.map((element, index) => {
-                            return (
-                                <li key={index} onClick={()=>changeCurrPage()}>
-                                    <p>{element}</p>
-                                </li>
-                            )
-                        })
-                    }
-                </ul>
-            </div>
-        )
-    }
+    return (
+        <div className="pagination">
+            <ul>
+                {
+                    pages.map((element, index) => {
+                        return (
+                            <li key={index} onClick={()=>changeCurrPage(element)}>
+                                <p>{element}</p>
+                            </li>
+                        )
+                    })
+                }
+            </ul>
+        </div>
+    )
 }
+
+
 
 export default Pagination;
 

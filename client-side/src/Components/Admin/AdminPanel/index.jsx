@@ -12,7 +12,6 @@ class AdminPanel extends Component {
             data: [],
             pageSize: 5,                // The amount of data per page
             currentPage: 1,             // Starter page for pagination
-            // lastPage: 1                 // Last page for pagination
         }
     }
 
@@ -164,7 +163,9 @@ class AdminPanel extends Component {
                                 onChange={this.handlePageChange.bind(this)}
                             /> */}
                             <Pagination 
-                                
+                                coinsPerPage={pageSize} 
+                                totalCoins={data.length}
+                                changeCurrPage={this.handlePageChange}  
                             />
                         </div>
                     }
