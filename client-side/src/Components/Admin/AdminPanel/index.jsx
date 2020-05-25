@@ -2,13 +2,17 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import SearchBar from '../../Common/SeachBar/index';
 import EachCoin from '../../Common/EachCoin/index';
+import Pagination from "../../Common/Pagination/index";
 import './index.scss';
 
 class AdminPanel extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: []
+            data: [],
+            pageSize: 5,                // The amount of data per page
+            currentPage: 1,             // Starter page for pagination
+            // lastPage: 1                 // Last page for pagination
         }
     }
 
@@ -81,12 +85,28 @@ class AdminPanel extends Component {
         }   
     }
 
-    handleSearchSubmit = (e) => {
+    handleSearchSubmit = async(e, criteria) => {
         e.preventDefault();
+        console.log(criteria);
+        const searchBarMainInput    = criteria.inputValue !== undefined ? `?searchBarMainInput=${criteria.inputValue}` : '';
+        const priceFrom             = criteria.priceFrom !== undefined ? `&priceFrom=${criteria.priceFrom}` : ''; 
+        const priceTo               = criteria.priceTo !== undefined ? `&priceTo=${criteria.priceTo}` : '';
+        const yearFrom              = criteria.yearFrom !== undefined ? `&yearFrom=${criteria.yearFrom}` : '';
+        const yearTo                = criteria.yearTo !== undefined ? `&yearTo=${criteria.yearTo}` : '';
+        const issuingCountry        = criteria.issuingCountry !== undefined ? `&issuingCountry=${criteria.issuingCountry}` : '';
+        const composition           = criteria.composition !== undefined ? `&composition=${criteria.composition}` : '';
+        const quality               = criteria.quality !== undefined ? `&quality=${criteria.quality}` : '';
+        const response  = await fetch(`http://localhost:3010/coins/${searchBarMainInput}${priceFrom}${priceTo}${yearFrom}${yearTo}${issuingCountry}${composition}${quality}`);
+        const data      = await response.json();
+        this.setState({data});
+    }
+
+    handlePageChange = (pageNumber) => {
+        this.setState({currentPage: pageNumber});
     }
 
     render = () => {
-        const {data} = this.state;
+        const {data, pageSize, currentPage} = this.state;
         return (
             <div className="admin-panel">
                 <header>
@@ -113,7 +133,7 @@ class AdminPanel extends Component {
                     </div>
                     {
                         data.length > 0 &&
-                        data.map((element, index) => {
+                        data.slice(pageSize * (currentPage - 1), pageSize * currentPage).map((element, index) => {
                             return (
                                 <div key={element.id} className="admin-panel-per-coin">
                                     <EachCoin {...element} />
@@ -133,7 +153,21 @@ class AdminPanel extends Component {
                     }
                 </main>
                 <footer>
-
+                    {
+                        data.length > 0 &&
+                        <div>
+                            {/* <Pagination 
+                                activePage={this.state.activePage}
+                                itemsCountPerPage={pageSize}
+                                totalItemsCount={data.length}
+                                pageRangeDisplayed={5}
+                                onChange={this.handlePageChange.bind(this)}
+                            /> */}
+                            <Pagination 
+                                
+                            />
+                        </div>
+                    }
                 </footer>
             </div>
         )

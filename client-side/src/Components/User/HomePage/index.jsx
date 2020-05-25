@@ -7,9 +7,7 @@ class HomePage extends Component {
 
     handleSearchSubmit = (e, criteria) => {
         e.preventDefault();
-        console.log(criteria)
-        // const {inputValue, selectedCountry, priceFrom, priceTo, yearFrom, yearTo} = criteria;
-        this.props.history.push(`/list/${criteria}`);
+        this.props.history.push('/list', criteria);
     }
 
     render = () => {

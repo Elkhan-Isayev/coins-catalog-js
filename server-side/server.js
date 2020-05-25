@@ -288,7 +288,8 @@ app.post('/coins', upload.fields([{name: 'obverse'}, {name: 'reverse'}]), (req, 
 });
 
 app.put('/coins/:id', upload.fields([{name: 'obverse'}, {name: 'reverse'}]), (req, res) => {
-    // console.log(req.body);
+
+    // access
 
     const id = +req.params.id;
     let obversePath, reversePath;
