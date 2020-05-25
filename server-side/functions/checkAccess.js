@@ -1,5 +1,6 @@
 const pool = require('../modules/db_connect.js');
 
+//  Check via token and call callback function 
 function checkAccess(token, role, res, callback) {                     // role = 1 (administrator) role = 2 (customer) role = 3 (support)
     const result = { isOk: false, status: 403 };
     if(!token) {

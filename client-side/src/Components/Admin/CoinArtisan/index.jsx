@@ -12,7 +12,7 @@ class CoinArtisan extends Component {
             short_description: "", 
             full_description: "", 
             issuing_country: "", 
-            composition: "",
+            composition: "Silver",
             quality: "BU",
             denomination: "",
             coin_year: "",

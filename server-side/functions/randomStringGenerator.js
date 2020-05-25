@@ -1,3 +1,4 @@
+//  Random function for creating new token
 function randomStringGenerator() {
     const length            = 30;
     let result              = '';

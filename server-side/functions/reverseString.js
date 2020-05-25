@@ -1,3 +1,4 @@
+//  Just reverse some string
 function reverseString(str) {
     if(str === "") {
         return "";

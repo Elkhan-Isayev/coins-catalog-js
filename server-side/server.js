@@ -38,6 +38,7 @@ app.get('/', (req, res) => {
     res.sendStatus(200);
 });
 
+//  Check access via token
 app.get('/sign-in/admin-panel/:id', (req, res) => {
     const token = req.params.id;
     checkAccess(token, 1, res, (result, res) => {        
@@ -46,6 +47,7 @@ app.get('/sign-in/admin-panel/:id', (req, res) => {
     });
 });
 
+//  Create token if exist or update 
 app.post('/sign-in', (req, res) => {
     const {login, password} = req.body;
     const checkUserScript = `SELECT * FROM users WHERE user_name='${login}'`;
@@ -81,6 +83,7 @@ app.post('/sign-in', (req, res) => {
     });
 });
 
+//  Get and filter coins by params
 app.get('/coins', (req, res) => {
     const {type, searchBarMainInput, priceFrom, priceTo, yearFrom, yearTo, issuingCountry, composition, quality} = req.query;
     //  Filter by..
@@ -117,6 +120,7 @@ app.get('/coins', (req, res) => {
     });
 });
 
+//  Get coin full info by id
 app.get('/coins/:id', (req, res) => {
     const id = +req.params.id;
     const getCoinsScript = `SELECT * FROM coins WHERE id=${id}`;
@@ -135,8 +139,8 @@ app.get('/coins/:id', (req, res) => {
     });
 });
 
+//  Get length for pagination(dv level) if it will be created 
 app.get('/coins-length', (req, res) => {
-    
     const coinsLengthScript = `SELECT count(*) AS length FROM coins`;
     pool.query(coinsLengthScript, (err, data) => {
         if(!err) {
@@ -149,6 +153,7 @@ app.get('/coins-length', (req, res) => {
     });
 });
 
+//  Delete item via check token
 app.delete('/coins/:id', (req, res) => {         // add check access via token
     const id = +req.params.id;
     const {token} = req.body;
@@ -172,7 +177,7 @@ app.delete('/coins/:id', (req, res) => {         // add check access via token
 });
 
 
-
+//  Get coin image
 app.get('/img/coins/:coin', (req, res) => {   
     const options = { 
         root: path.join(__dirname, '/assets/public/coins'),
@@ -197,6 +202,7 @@ app.get('/img/coins/:coin', (req, res) => {
     }    
 });
 
+//  Get all metalls
 app.get('/compositions', (req, res) => {
     const getScript = `SELECT * FROM compositions`;
     pool.query(getScript, (err, data) => {
@@ -214,6 +220,8 @@ app.get('/compositions', (req, res) => {
     });
 });
 
+
+//  Get all countries 
 app.get('/countries', (req, res) => {
     const getScript = `SELECT * FROM countries`;
     pool.query(getScript, (err, data) => {
@@ -231,16 +239,14 @@ app.get('/countries', (req, res) => {
     });
 });
 
-
-
+//  Download coin image
 app.get('/img/download/coins/:coin', (req, res) => {
     const coin = req.params.coin;
     const file = `${__dirname}/assets/public/coins/${coin}`;
     res.download(file);
 });
 
-
-
+//  Create new coin 
 app.post('/coins', upload.fields([{name: 'obverse'}, {name: 'reverse'}]), (req, res) => {
     const obverseFileName = req.files.obverse[0].filename;
     const reverseFileName = req.files.reverse[0].filename;
@@ -287,9 +293,10 @@ app.post('/coins', upload.fields([{name: 'obverse'}, {name: 'reverse'}]), (req, 
     });
 });
 
+//  Update selected coin
 app.put('/coins/:id', upload.fields([{name: 'obverse'}, {name: 'reverse'}]), (req, res) => {
 
-    // access
+    
 
     const id = +req.params.id;
     let obversePath, reversePath;
