@@ -13,7 +13,7 @@ class CoinArtisan extends Component {
             full_description: "", 
             issuing_country: "", 
             composition: "",
-            quality: "",
+            quality: "BU",
             denomination: "",
             coin_year: "",
             weight: "",
@@ -155,11 +155,11 @@ class CoinArtisan extends Component {
             break;
 
             case 'coinArtisanYear':
-                this.setState({coin_year: e.target.value});
+                this.setState({coin_year: Number(e.target.value)});
             break;
 
             case 'coinArtisanPrice':
-                this.setState({price: e.target.value});
+                this.setState({price: Number(e.target.value)});
             break;
 
             case 'coinArtisanLongDescription':
@@ -179,7 +179,7 @@ class CoinArtisan extends Component {
             break;
 
             case 'coinArtisanWeight':
-                this.setState({weight: e.target.value});
+                this.setState({weight: Number(e.target.value)});
             break;
 
             case 'coinArtisanType':

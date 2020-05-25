@@ -50,4 +50,14 @@
     .list-per-coin:nth-child(even) {
         margin-left: 250px;
     }
+
+    .list-per-coin {
+        margin-top: 20px;
+    }
+
+    footer {
+        margin-top: 50px;
+        display: flex;
+        justify-content: center;
+    }
 }

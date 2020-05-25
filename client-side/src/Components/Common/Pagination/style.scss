@@ -1,11 +1,23 @@
 .pagination {
     ul {
         display: flex;
-        justify-content: space-around;
+        // justify-content: space-around;
+        align-items: center;
         flex-wrap: wrap;
+        list-style: none;
         li {
             border: 1px solid black;
+            border-radius: 40%;
             cursor: pointer;
+            height: 50px;
+            width: 50px;
+            text-align: center;
+            margin: 5px;
+        }
+
+        li:active {
+            background-color: #833ae0;
+            color: white;
         }
     }
 }

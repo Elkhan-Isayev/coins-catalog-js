@@ -156,6 +156,28 @@
         border: 1px solid #000000;
     }
 
+    div {
+        margin-left: 10px;
+    }
+
+    a {
+        text-decoration: none;
+        color: darkgrey
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+    input { 
+        // border-radius: 10px;
+        // border: none
+        // display: none;
+        // border: 1px solid #ccc;
+        // display: inline-block;
+        // padding: 6px 6px;
+        cursor: pointer;
+    }
     // div:first-child {
     //     border: 1px solid #000000;
     //     min-height: 120px;

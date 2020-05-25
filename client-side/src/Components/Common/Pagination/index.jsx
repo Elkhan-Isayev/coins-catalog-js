@@ -28,5 +28,4 @@ const Pagination = ({coinsPerPage, totalCoins, changeCurrPage}) => {
 }
 
 
-
 export default Pagination;

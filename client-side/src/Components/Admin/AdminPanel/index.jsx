@@ -10,7 +10,7 @@ class AdminPanel extends Component {
         super(props);
         this.state = {
             data: [],
-            pageSize: 5,                // The amount of data per page
+            pageSize: 2,                // The amount of data per page
             currentPage: 1,             // Starter page for pagination
         }
     }
@@ -155,13 +155,6 @@ class AdminPanel extends Component {
                     {
                         data.length > 0 &&
                         <div>
-                            {/* <Pagination 
-                                activePage={this.state.activePage}
-                                itemsCountPerPage={pageSize}
-                                totalItemsCount={data.length}
-                                pageRangeDisplayed={5}
-                                onChange={this.handlePageChange.bind(this)}
-                            /> */}
                             <Pagination 
                                 coinsPerPage={pageSize} 
                                 totalCoins={data.length}

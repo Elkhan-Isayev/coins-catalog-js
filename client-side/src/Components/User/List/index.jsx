@@ -2,13 +2,16 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import EachCoin from '../../Common/EachCoin/index';
 import SearchBar from '../../Common/SeachBar/index';
+import Pagination from '../../Common/Pagination/index';
 import './style.scss';
 
 class CoinsList extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: []
+            data: [],
+            currentPage: 1,
+            pageSize: 6
         }
     }
 
@@ -71,8 +74,12 @@ class CoinsList extends Component {
         }
     }
 
+    handlePageChange = (pageNumber) => {
+        this.setState({currentPage: pageNumber});
+    }
+
     render = () => {
-        const {data} = this.state;
+        const {data, pageSize, currentPage} = this.state;
         return (
             <div className="list">
                 <header>
@@ -89,7 +96,7 @@ class CoinsList extends Component {
                     <div className="list-coins-wrapper">
                         {
                             data.length > 0 &&
-                            data.map((element, index) => {
+                            data.slice(pageSize * (currentPage - 1), pageSize * currentPage).map((element, index) => {
                                 return (
                                     <div key={element.id} className="list-per-coin">
                                         <EachCoin {...element} />
@@ -100,6 +107,16 @@ class CoinsList extends Component {
                         }
                     </div>
                 </main>
+                <footer>
+                    {
+                        data.length > 0 &&
+                        <Pagination 
+                            coinsPerPage={pageSize} 
+                            totalCoins={data.length}
+                            changeCurrPage={this.handlePageChange}  
+                        />
+                    }
+                </footer>
             </div>
         )
     }
