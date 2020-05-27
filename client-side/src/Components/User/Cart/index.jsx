@@ -78,7 +78,6 @@ class Cart extends Component {
         };
         try {
             const response = await fetch(`http://localhost:3010/cart/${id}`, options);
-            console.log(response);
             if(response.ok) {
                 const newArr = [...data];
                 newArr.splice(index, 1);
@@ -124,7 +123,7 @@ class Cart extends Component {
                                             <div key={index} className="cart-per-coin slideLeft">
                                                 <EachCoin {...element} />
                                                 <div className="remove-from-cart-coin-wrapper">
-                                                    <button onClick={() => this.handleRemoveFromCart(element.id, index)}>
+                                                    <button onClick={() => this.handleRemoveFromCart(element.cart_id, index)}>
                                                         Remove
                                                     </button>
                                                 </div>

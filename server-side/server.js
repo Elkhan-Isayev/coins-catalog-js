@@ -63,7 +63,7 @@ app.get('/cart/:id', (req, res) => {
     const userId = +req.params.id;
     const getUserCartItemsScript = 
     `
-    SELECT coins.id, coin_name, short_description, obverse_path FROM coins 
+    SELECT coins.id, coin_name, short_description, obverse_path, carts.id AS cart_id FROM coins 
     INNER JOIN carts on carts.coin_id = coins.id
     WHERE carts.user_id = ${userId};
     `;
@@ -79,7 +79,16 @@ app.get('/cart/:id', (req, res) => {
 
 //  Remove cart item 
 app.delete('/cart/:id', (req, res) => {
-
+    const cartItemId = +req.params.id;
+    const deleteCartItemScript = `DELETE FROM carts WHERE id=${cartItemId}`;
+    pool.query(deleteCartItemScript, (err, data) => {
+        if(!err) {
+            res.status(200).json(data);
+        }
+        else {
+            res.sendStatus(500);
+        }
+    });
 });
 
 //  Check access via token and get role
