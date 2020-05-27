@@ -10,7 +10,7 @@ class AdminPanel extends Component {
         super(props);
         this.state = {
             data: [],
-            pageSize: 2,                // The amount of data per page
+            pageSize: 4,                // The amount of data per page
             currentPage: 1,             // Starter page for pagination
         }
     }
@@ -134,7 +134,7 @@ class AdminPanel extends Component {
                         data.length > 0 &&
                         data.slice(pageSize * (currentPage - 1), pageSize * currentPage).map((element, index) => {
                             return (
-                                <div key={element.id} className="admin-panel-per-coin">
+                                <div key={element.id} className="admin-panel-per-coin slideLeft">
                                     <EachCoin {...element} />
                                     <div className="admin-panel-edit-link-wrapper">
                                         <Link to={`/coin/artisan/${element.id}`} className="admin-panel-edit-link">
