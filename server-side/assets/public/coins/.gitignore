@@ -1,3 +1,6 @@
 # ignore all photos except not-found.png
-*.png
+/.png
+
 !not-found.png
+
+*.*
