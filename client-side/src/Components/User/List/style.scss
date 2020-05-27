@@ -53,6 +53,29 @@
 
     .list-per-coin {
         margin-top: 20px;
+        margin-top: 40px;
+        display: flex;
+        justify-content: flex-start;
+    }
+
+    .add-to-cart-per-coin-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center; 
+        button {
+            text-decoration: none;
+            margin-left: 32px;
+            min-width: 120px;
+            color: #000000;
+            background-color: #E5E5E5;
+            cursor: pointer;
+            border: none;
+            height: 50px;
+            font-weight: normal;
+            display: flex;
+            justify-content: center;
+            align-items: center;  
+        }
     }
 
     footer {

@@ -17,7 +17,9 @@ CREATE TABLE users (
     FOREIGN KEY (user_role) REFERENCES user_roles(id)
 );
 
-INSERT INTO user_roles(role_name) VALUES ('administrator');
+INSERT INTO user_roles(role_name) VALUES 
+('administrator'),
+('customer');
 -- Add user without token.
 INSERT INTO users(user_name, password_hash, password_salt, user_role) VALUES ('admin', '$2b$10$B1MGYEYQqa7IQx2kdg.YKeNZS9xTHPuvDs/ZaxF8JYPPhto.rbtlC', '$2b$10$B1MGYEYQqa7IQx2kdg.YKe', 1);
 
@@ -290,5 +292,12 @@ INSERT INTO compositions
 ('Gold'),
 ('Steel'),
 ('Silver');
+
+CREATE TABLE carts (
+	id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT NOT NULL,
+    coin_id INT NOT NULL
+);
+
 
 -- Ready ! 

@@ -146,7 +146,7 @@ class SearchBar extends Component {
                     }
                     {
                         isFilterShow ?
-                            <div className="filter-wrapper">
+                            <div className="filter-wrapper slideExpandUp">
                                 <div className="filter-issuing-metal">
                                     <div className="filter-row">
                                         <div><label htmlFor="filterIssuingCountry">Issuing country</label></div>

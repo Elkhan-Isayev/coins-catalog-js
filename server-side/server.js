@@ -38,12 +38,79 @@ app.get('/', (req, res) => {
     res.sendStatus(200);
 });
 
-//  Check access via token
+//  Add items to cart
+app.post('/cart', (req, res) => {
+    console.log(req.body);
+    const {userId, coinId} = req.body;
+    if(!userId || !coinId) {
+        res.sendStatus(404);
+        return;
+    }
+    const insertItemToCartScript = `INSERT INTO carts(user_id, coin_id) VALUES (${userId},${coinId});`;
+    pool.query(insertItemToCartScript, (err, data) => {
+        if (!err) {
+            res.sendStatus(200);
+        }
+        else {
+            console.log(err);
+            res.status(500);  
+        }   
+    });
+});
+
+//  Get items from cart
+app.get('/cart/:id', (req, res) => {
+    const userId = +req.params.id;
+    const getUserCartItemsScript = 
+    `
+    SELECT coins.id, coin_name, short_description, obverse_path FROM coins 
+    INNER JOIN carts on carts.coin_id = coins.id
+    WHERE carts.user_id = ${userId};
+    `;
+    pool.query(getUserCartItemsScript, (err, data) => {
+        if(!err) {
+            res.status(200).json(data);
+        }
+        else{ 
+            res.sendStatus(500);
+        }
+    });
+});
+
+//  Remove cart item 
+app.delete('/cart/:id', (req, res) => {
+
+});
+
+//  Check access via token and get role
 app.get('/sign-in/admin-panel/:id', (req, res) => {
     const token = req.params.id;
-    checkAccess(token, 1, res, (result, res) => {        
-        res.sendStatus(result.status);
+    checkAccess(token, res, (result, res, role) => {        
+        if(result.isOk) {
+            res.status(result.status).json({role, id: result.id});
+        }
+        else {
+            res.sendStatus(result.status);
+        }
         return;
+    });
+});
+
+//  Create new user
+app.post('/registration', (req, res) => {
+    const {regLogin, regPass} = req.body;
+    const salt = bcrypt.genSaltSync(10);
+    const hash = bcrypt.hashSync(regPass, salt);
+    const token = randomStringGenerator() + reverseString(regLogin);
+    const insertUserScript = `INSERT INTO users(user_name, password_hash, password_salt, token, user_role) VALUES ('${regLogin}', '${hash}', '${salt}', '${token}', ${2});`;
+    pool.query(insertUserScript, (err, data) => {
+        if (!err) {
+            res.status(200).json({token, role: 2});
+        }
+        else {
+            console.log(err);
+            res.status(500);  
+        }   
     });
 });
 
@@ -157,7 +224,7 @@ app.get('/coins-length', (req, res) => {
 app.delete('/coins/:id', (req, res) => {         // add check access via token
     const id = +req.params.id;
     const {token} = req.body;
-    checkAccess(token, 1, res, (result, res) => {        
+    checkAccess(token, res, (result, res) => {        
         if(result.isOk) {
             const deleteScript = `DELETE FROM coins WHERE id=?`;
             pool.query(deleteScript, id, (err, data) => {

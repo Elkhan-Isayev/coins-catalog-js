@@ -1,0 +1,87 @@
+.cart {
+    header {
+      
+
+        h1 {
+            font-family: Roboto;
+            font-style: normal;
+            font-weight: 300;
+            font-size: 300%;
+            margin-bottom: 0px;
+        }
+
+        div {
+            margin: auto 0;
+            
+            a {
+                // text-decoration: none;
+                // padding: 15px 20px;
+                // color: white;
+                // background-color: #833ae0;
+                border: none;
+                color: #000000;
+                // background-color: #833AE0;
+                cursor: pointer;
+                font-size: 10px;
+                color: #B1ABAB;
+            }
+            span {
+                font-size: 10px;
+                color: #B1ABAB;
+            }
+
+            a:active {
+                opacity: 0.5;
+                transition: 0.1s;
+            }
+        }
+    }
+
+    main {
+        .cart-coins-wrapper {
+            margin-top: 40px;
+            display: flex;
+            flex-wrap: wrap;
+
+            .cart-per-coin {
+                margin-top: 20px;
+                margin-top: 40px;
+                display: flex;
+                justify-content: flex-start;
+
+                .remove-from-cart-coin-wrapper {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center; 
+                    
+                    button {
+                        text-decoration: none;
+                        margin-left: 32px;
+                        min-width: 120px;
+                        color: #000000;
+                        background-color: #E5E5E5;
+                        cursor: pointer;
+                        border: none;
+                        height: 50px;
+                        font-weight: normal;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;  
+                    }
+                }
+            }
+
+
+            .cart-per-coin:nth-child(even) {
+                margin-left: 250px;
+            }
+        }
+        
+    }
+
+    footer {
+        margin-top: 50px;
+        display: flex;
+        justify-content: center;
+    }
+}

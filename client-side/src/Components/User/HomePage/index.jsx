@@ -4,19 +4,72 @@ import SearchBar from '../../Common/SeachBar/index';
 import './style.scss';
 
 class HomePage extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            isRegistered: false
+        }
+    }
 
     handleSearchSubmit = (e, criteria) => {
         e.preventDefault();
         this.props.history.push('/list', criteria);
     }
 
+    componentDidMount = () => {
+        this.checkAccessToCart();
+    }
+
+    checkAccessToCart = async() => {
+        const token = localStorage.getItem('token');
+        if(!token) {
+            return;
+        }
+        try {
+            const response  = await fetch(`http://localhost:3010/sign-in/admin-panel/${token}`);
+            if(!response.ok) {
+                return;
+            }
+            else {
+                const data = await response.json();
+                switch(data.role) {
+                    case 2: 
+                        this.setState({isRegistered: true});
+                    break;
+                    default: break;
+                }
+            }
+        }
+        catch(err) {
+            return;
+        }
+    }
+
+    handleLogOut = () => {
+        localStorage.removeItem('token');
+        this.setState({isRegistered: false});
+    }
+
     render = () => {
+        const {isRegistered} = this.state;
         return (
             <div className="homepage">
                 <header>
                     <h1>Homepage</h1>
                     <div>
-                        <Link to="/sign-in">Login</Link>
+                        <Link to="/list">Coins</Link>
+                        {
+                            
+                        }
+                        {
+                            isRegistered ? 
+                            <>
+                                <Link to="/cart">Cart</Link> 
+                                <button onClick={this.handleLogOut}>Log out</button>
+                            </>                        
+                            : 
+                            <Link to="/sign-in">Log in</Link>
+                        }
                     </div>
                 </header>
 

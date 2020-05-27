@@ -11,12 +11,41 @@ class CoinsList extends Component {
         this.state = {
             data: [],
             currentPage: 1,
-            pageSize: 6
+            pageSize: 6,
+            isRegistered: false,
+            userId: 0
         }
     }
 
     componentDidMount = () => {
         this.getCoins();
+        this.checkAccessToCart();    
+    }
+
+    checkAccessToCart = async() => {
+        const token = localStorage.getItem('token');
+        if(!token) {
+            
+            return;
+        }
+        try {
+            const response  = await fetch(`http://localhost:3010/sign-in/admin-panel/${token}`);
+            if(!response.ok) {
+                return;
+            }
+            else {
+                const data = await response.json();
+                switch(data.role) {
+                    case 2: 
+                        this.setState({isRegistered: true, userId: data.id});
+                    break;
+                    default: break;
+                }
+            }
+        }
+        catch(err) {
+            return;
+        }
     }
 
     getCoins = async() => {
@@ -78,12 +107,43 @@ class CoinsList extends Component {
         this.setState({currentPage: pageNumber});
     }
 
+    handleAddToCart = async(coinId) => {
+        const {isRegistered, userId} = this.state;
+        if(!isRegistered) {
+            alert("Something goes wrong. Please, try again");
+            return;
+        }
+        try {
+            const addToCartData  = {userId, coinId};
+            const options       = {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*',
+                },
+                body: JSON.stringify(addToCartData)
+            };
+
+            const response  = await fetch("http://localhost:3010/cart",options);
+            if(!response.ok) {
+                alert("Something goes wrong. Please, try again");
+                return;
+            }
+            else {
+                alert("Item added to cart");
+            }
+        }
+        catch(err) {
+            console.log(err);
+        }
+    }
+
     render = () => {
-        const {data, pageSize, currentPage} = this.state;
+        const {data, pageSize, currentPage, isRegistered} = this.state;
         return (
             <div className="list">
                 <header>
-                    <h1>List of the coins</h1>
+                    <h1>Coins</h1>
                     <div>
                         <Link to="/">Homepage </Link><span>— List of the coins</span>
                     </div>
@@ -98,9 +158,17 @@ class CoinsList extends Component {
                             data.length > 0 &&
                             data.slice(pageSize * (currentPage - 1), pageSize * currentPage).map((element, index) => {
                                 return (
-                                    <div key={element.id} className="list-per-coin">
+                                    <div key={element.id} className="list-per-coin slideLeft">
                                         <EachCoin {...element} />
-                                        
+                                        {
+                                            isRegistered && 
+                                            <div className="add-to-cart-per-coin-wrapper">
+                                                <button onClick={() => this.handleAddToCart(element.id)}>
+                                                    Add to cart
+                                                </button>
+                                            </div>
+                                            
+                                        }
                                     </div>
                                 )
                             }) 
