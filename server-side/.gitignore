@@ -7,6 +7,7 @@
 
 # ignore all photos except ntfound.png
 assets/public/coins/*.png
+!assets/public/coins/not-found.png
 
 # testing
 /coverage
