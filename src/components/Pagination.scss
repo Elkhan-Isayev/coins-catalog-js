@@ -1,0 +1,28 @@
+.pagination {
+  margin-top: 36px;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+
+  button {
+    width: 44px;
+    height: 44px;
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    background: #fff;
+    cursor: pointer;
+    font-size: 15px;
+    transition: all 0.15s ease;
+
+    &:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    &.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+  }
+}

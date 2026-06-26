@@ -1,0 +1,49 @@
+.coin-card {
+  display: flex;
+  gap: 16px;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  text-decoration: none;
+  color: var(--ink);
+  background: var(--bg);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 24px rgba(131, 58, 224, 0.14);
+  }
+
+  .coin-card-icon svg {
+    width: 64px;
+    height: 64px;
+    flex-shrink: 0;
+  }
+
+  .coin-card-body {
+    display: flex;
+    flex-direction: column;
+
+    h3 {
+      margin: 0 0 6px;
+      color: var(--accent);
+      font-size: 18px;
+    }
+
+    p {
+      margin: 0 0 10px;
+      font-size: 14px;
+      line-height: 1.4;
+      color: var(--ink);
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .coin-card-price {
+      margin-top: auto;
+      font-weight: 700;
+    }
+  }
+}

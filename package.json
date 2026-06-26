@@ -1,0 +1,23 @@
+{
+  "name": "coins-catalog",
+  "version": "2.0.0",
+  "description": "Lightweight static coins catalog — a single-page React app deployable to GitHub Pages.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Elkhan Isayev",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.26.2"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^6.0.3",
+    "sass": "^1.79.4",
+    "vite": "^8.1.0"
+  }
+}

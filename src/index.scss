@@ -1,0 +1,136 @@
+:root {
+  --accent: #833ae0;
+  --accent-dark: #6a2dba;
+  --ink: #1a1a1a;
+  --muted: #6b7280;
+  --line: #e5e7eb;
+  --bg: #ffffff;
+  --bg-soft: #f7f5fb;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  color: var(--ink);
+  background: var(--bg);
+  font-family: 'Segoe UI', Roboto, -apple-system, BlinkMacSystemFont, Oxygen,
+    Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  color: var(--accent);
+}
+
+button {
+  font-family: inherit;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 18px 6vw;
+  border-bottom: 1px solid var(--line);
+
+  .app-logo {
+    font-size: 22px;
+    font-weight: 700;
+    text-decoration: none;
+    color: var(--ink);
+
+    span {
+      color: var(--accent);
+    }
+  }
+
+  nav {
+    display: flex;
+    gap: 8px;
+
+    a {
+      text-decoration: none;
+      padding: 8px 16px;
+      border-radius: 8px;
+      color: var(--ink);
+      transition: background 0.15s ease, color 0.15s ease;
+
+      &:hover {
+        background: var(--bg-soft);
+        color: var(--accent);
+      }
+    }
+  }
+}
+
+.app-main {
+  flex: 1;
+  width: 100%;
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 32px 6vw 56px;
+}
+
+.app-footer {
+  border-top: 1px solid var(--line);
+  padding: 20px 6vw;
+  color: var(--muted);
+  font-size: 14px;
+  text-align: center;
+}
+
+.page-title {
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: 300;
+  margin: 0 0 4px;
+}
+
+.page-subtitle {
+  color: var(--muted);
+  margin: 0 0 28px;
+}
+
+.btn {
+  display: inline-block;
+  border: none;
+  cursor: pointer;
+  padding: 12px 22px;
+  border-radius: 8px;
+  font-size: 15px;
+  background: var(--accent);
+  color: #fff;
+  text-decoration: none;
+  transition: background 0.15s ease;
+
+  &:hover {
+    background: var(--accent-dark);
+  }
+
+  &.btn-ghost {
+    background: transparent;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+
+    &:hover {
+      background: var(--bg-soft);
+    }
+  }
+}
+
+.empty {
+  color: var(--muted);
+  padding: 40px 0;
+  text-align: center;
+}

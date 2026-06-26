@@ -1,0 +1,46 @@
+.home {
+  .hero {
+    padding: 24px 0 48px;
+    max-width: 640px;
+  }
+
+  .categories {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 24px;
+  }
+
+  .category-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 28px;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    text-decoration: none;
+    color: var(--ink);
+    background: var(--bg-soft);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 28px rgba(131, 58, 224, 0.15);
+    }
+
+    .category-icon {
+      width: 72px;
+      height: 72px;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: 22px;
+    }
+
+    .category-link {
+      color: var(--accent);
+      font-weight: 600;
+    }
+  }
+}
