@@ -33,7 +33,7 @@ export default function CoinDetails() {
   return (
     <article className="coin-details">
       <div className="coin-details-media">
-        <CoinIcon />
+        <CoinIcon coin={coin} />
       </div>
 
       <div className="coin-details-info">

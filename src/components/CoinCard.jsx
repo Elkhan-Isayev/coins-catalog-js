@@ -6,7 +6,7 @@ export default function CoinCard({ coin }) {
   return (
     <Link to={`/coins/${coin.id}`} className="coin-card">
       <div className="coin-card-icon">
-        <CoinIcon />
+        <CoinIcon coin={coin} />
       </div>
       <div className="coin-card-body">
         <h3>{coin.coin_name}</h3>
